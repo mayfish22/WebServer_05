@@ -26,7 +26,8 @@ namespace WebServer.Services
             //檢查帳號是否重覆
             var accountDupes = _WebServerDBContext.User
                 .Where(s => (string.IsNullOrEmpty(user.ID) || s.ID.ToUpper() != user.ID.ToUpper())
-                    && s.Account.ToUpper() == user.Account.Trim().ToUpper()).Select(s => s);
+                    && s.Account.ToUpper() == user.Account.Trim().ToUpper())
+                .Select(s => s);
             if (accountDupes.Any())
             {
                 result.Add(new ValidatorMessage
@@ -39,7 +40,8 @@ namespace WebServer.Services
             //檢查Email是否重覆
             var emailDupes = _WebServerDBContext.User
                 .Where(s => (string.IsNullOrEmpty(user.ID) || s.ID.ToUpper() != user.ID.ToUpper())
-                    && s.Email.ToUpper() == user.Email.Trim().ToUpper()).Select(s => s);
+                    && s.Email.ToUpper() == user.Email.Trim().ToUpper())
+                .Select(s => s);
             if (emailDupes.Any())
             {
                 result.Add(new ValidatorMessage

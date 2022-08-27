@@ -131,13 +131,15 @@ namespace WebServer.Controllers
                     var errors = ModelState.Values.Where(s => s.Errors.Any()).Select(s => s);
                     throw new Exception(errors.First().Errors.First().ErrorMessage);
                 }
-
-                model.User.ID = Guid.NewGuid().ToString().ToUpper();
-                model.User.Account = model.User.Account.Trim();
-                model.User.Password = _SiteService.EncoderSHA512(model.User.Password);
-                model.User.Name = model.User.Name.Trim();
-                model.User.Email = model.User.Email.Trim().ToUpper();
-                model.User.IsEnabled = 1; 
+                if(model.User != null)
+                {
+                    model.User.ID = Guid.NewGuid().ToString().ToUpper();
+                    model.User.Account = model.User.Account.Trim();
+                    model.User.Password = _SiteService.EncoderSHA512(model.User.Password);
+                    model.User.Name = model.User.Name.Trim();
+                    model.User.Email = model.User.Email.Trim().ToUpper();
+                    model.User.IsEnabled = 1;
+                }
 
                 await _WebServerDBContext.User.AddAsync(model.User);
                 await _WebServerDBContext.SaveChangesAsync();

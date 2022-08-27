@@ -28,7 +28,8 @@ namespace WebServer.Services
         /// <returns></returns>
         public async Task<Response> Send(MailModel model)
         {
-            var msg = MailHelper.CreateSingleEmailToMultipleRecipients(new EmailAddress(_senderEmail),
+            var msg = MailHelper.CreateSingleEmailToMultipleRecipients(
+                new EmailAddress(_senderEmail),
                 model.Receivers.ToList(),
                 model.Subject,
                 model.PlainTextContent,
